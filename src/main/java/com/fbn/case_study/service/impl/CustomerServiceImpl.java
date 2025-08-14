@@ -22,7 +22,6 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerMapper mapper;
     @Transactional
     public CustomerDto.Response create(CustomerDto.Request request, CustomerMapper mapper, String principal) {
-        System.out.println("received request "+request);
         if (customerRepository.existsByAccountNumber(request.getAccountNumber())) {
             throw new DuplicateKeyException("Account number already exists");
         }
