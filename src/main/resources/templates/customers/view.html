@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Registration</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-secondary text-white">
+            <h4 class="mb-0">Customer Details</h4>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+
+                <dt class="col-sm-3">First Name</dt>
+                <dd class="col-sm-9" th:text="${customer.firstName}"></dd>
+
+                <dt class="col-sm-3">Last Name</dt>
+                <dd class="col-sm-9" th:text="${customer.lastName}"></dd>
+
+                <dt class="col-sm-3">NIN</dt>
+                <dd class="col-sm-9" th:text="${customer.nin}"></dd>
+
+                <dt class="col-sm-3">BVN</dt>
+                <dd class="col-sm-9" th:text="${customer.bvn}"></dd>
+
+                <dt class="col-sm-3">Email</dt>
+                <dd class="col-sm-9" th:text="${customer.email}"></dd>
+
+                <dt class="col-sm-3">Date of Birth</dt>
+                <dd class="col-sm-9" th:text="${#temporals.format(customer.dob, 'dd-MM-yyyy')}"></dd>
+
+                <dt class="col-sm-3">Phone</dt>
+                <dd class="col-sm-9" th:text="${customer.phone}"></dd>
+
+                <dt class="col-sm-3">Address</dt>
+                <dd class="col-sm-9" th:text="${customer.address}"></dd>
+
+                <dt class="col-sm-3">Account Number</dt>
+                <dd class="col-sm-9" th:text="${customer.accountNumber}"></dd>
+
+                <dt class="col-sm-3">Customer Type</dt>
+                <dd class="col-sm-9" th:text="${customer.customerType}"></dd>
+
+                <dt class="col-sm-3">Classification</dt>
+                <dd class="col-sm-9" th:text="${customer.classification}"></dd>
+
+                <dt class="col-sm-3">KYC Level</dt>
+                <dd class="col-sm-9" th:text="${customer.kycLevel}"></dd>
+
+            </dl>
+
+            <div class="text-end">
+                <a th:href="@{/api/v1/rm/customer/edit/{id}(id=${customer.id})}" class="btn btn-primary px-4">Edit</a>
+                <a th:href="@{/api/v1/rm/customer}" class="btn btn-secondary px-4">Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

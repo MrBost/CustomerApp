@@ -57,9 +57,9 @@
                     <td th:text="${cust.classification}"></td>
                     <td th:text="${cust.kycLevel}"></td>
                     <td>
-                        <a th:href="@{/api/v1/rm/customers/edit/{id}(id=${cust.id})}" class="btn btn-sm btn-warning">Edit</a>
-                        <form th:action="@{/api/v1/rm/customers/delete/{id}(id=${cust.id})}" method="post" class="d-inline">
-                            <input type="hidden" name="_method" value="delete"/>
+                        <a th:href="@{/api/v1/rm/customer/{id}(id=${cust.id})}" class="btn btn-sm btn-warning">View</a>
+                        <a th:href="@{/api/v1/rm/customer/edit/{id}(id=${cust.id})}" class="btn btn-sm btn-warning">Edit</a>
+                        <form th:action="@{/api/v1/rm/customer/delete/{id}(id=${cust.id})}" method="post" class="d-inline">
                             <button type="submit" class="btn btn-sm btn-danger"
                                     onclick="return confirm('Are you sure you want to delete this customer?');">
                                 Delete

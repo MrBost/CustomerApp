@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fbn.case_study.entity.Customer;
 import jakarta.validation.constraints.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -38,6 +39,7 @@ public class CustomerDto {
         @Pattern(regexp="^[0-9]{11}$", message = "BVN must be 11 digits")
         private String bvn;
 
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
         @Past(message = "Date of birth must be in the past")
         @NotNull(message = "Date of birth is required")

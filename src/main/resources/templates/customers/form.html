@@ -48,7 +48,7 @@
 
                 <div class="mb-3">
                     <label for="dob" class="form-label">Date of Birth</label>
-                    <input id="dob" th:field="*{dob}" class="form-control" placeholder="Enter Date of Birth">
+                    <input id="dob" th:field="*{dob}" type="date" class="form-control">
                     <div class="text-danger small" th:if="${#fields.hasErrors('dob')}" th:errors="*{dob}"></div>
                 </div>
 

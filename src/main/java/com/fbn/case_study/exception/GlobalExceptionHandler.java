@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -76,6 +77,18 @@ public class GlobalExceptionHandler {
                 .build();
         return new ResponseEntity<>(response, BAD_REQUEST);
     }
+    @ExceptionHandler(value = BindException.class)
+    public ResponseEntity<?> handleBindException(BindException ex) {
+        var response = ApiResponse.builder()
+                .referenceId(UUID.randomUUID().toString())
+                .requestTime(LocalDateTime.now())
+                .requestType("Outbound")
+                .message("Unable to process request at this time, please try again later. "+ex.getMessage())
+                .status(false)
+                .error("Invalid input")
+                .build();
+        return new ResponseEntity<>(response, BAD_REQUEST);
+    }
     @ExceptionHandler(value = RuntimeException.class)
     public ResponseEntity<?> handleRuntimeException(RuntimeException ex) {
         var response = ApiResponse.builder()
@@ -101,6 +114,7 @@ public class GlobalExceptionHandler {
                 .build();
         return new ResponseEntity<>(response, BAD_REQUEST);
     }
+
     @ExceptionHandler(value = DuplicateKeyException.class)
     public ResponseEntity<?> handleDuplicateKeyException(DuplicateKeyException ex) {
         var response = ApiResponse.builder()

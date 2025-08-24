@@ -41,11 +41,31 @@ public class CustomerRMApiController {
         ra.addFlashAttribute("msg", "Customer created");
         return "redirect:/api/v1/rm/customer";
     }
+    @GetMapping("/edit/{id}")
+    public String editCustomerForm(@PathVariable String id, Model model) {
+        CustomerDto.Response customer = customerService.get(id);
+        model.addAttribute("customer", customer);
+        model.addAttribute("types", Customer.CustomerType.values());
+        model.addAttribute("classes", Customer.Classification.values());
+        return "customers/edit";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateCustomer(@PathVariable String id,
+                                 @ModelAttribute("customer") CustomerDto.Request customer) {
+        customerService.update(id, customer);
+        return "redirect:/api/v1/rm/customer/" + id;
+    }
 
     @GetMapping("/{id}")
     public String view(@PathVariable String id, Model model) {
         model.addAttribute("customer", customerService.get(id));
         return "customers/view";
+    }
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable String id) {
+        customerService.delete(id);
+        return "redirect:/api/v1/rm/customer";
     }
 
 }
