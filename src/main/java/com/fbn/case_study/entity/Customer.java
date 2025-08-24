@@ -24,23 +24,23 @@ public class Customer extends BaseEntity {
     @Column(nullable = false, length = 100)
     private String lastName;
 
-    @Column(nullable = false, length = 120)
+    @Column(nullable = false, length = 120, unique = true)
     private String email;
 
-    @Column(length = 25)
+    @Column(length = 25, unique = true)
     private String phone;
 
-    @Column(name = "account_number", nullable = false, unique = true, length = 20)
+    @Column(name = "account_number", nullable = false, unique = true, length = 50)
     private String accountNumber;
 
-    @Column(nullable = false, unique = true, length = 20)
+    @Column(nullable = false, length = 200)
     private String address;
 
-    @Column(name = "nin")
+    @Column(name = "nin", unique = true)
     @Convert(converter = AttributeEncryptor.class)
     private String nin;
 
-    @Column(name = "bvn")
+    @Column(name = "bvn", unique = true)
     @Convert(converter = AttributeEncryptor.class)
     private String bvn;
 
@@ -48,18 +48,22 @@ public class Customer extends BaseEntity {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate dob;
 
-    @Enumerated(EnumType.STRING) @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private CustomerType customerType;
 
-    @Enumerated(EnumType.STRING) @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Classification classification;
 
     @Column(name = "profile_photo")
     private String profilePhoto;
 
-    @Column(nullable = false) private Integer kycLevel;
+    @Column(nullable = false)
+    private Integer kycLevel;
 
-    @Enumerated(EnumType.STRING) @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private CustomerStatus status = CustomerStatus.ACTIVE;
 //    @Embedded
 //    private NextOfKin nextOfKinDetails;
@@ -89,4 +93,5 @@ public class Customer extends BaseEntity {
         @Column(name = "relationship")
         private String relationship;
     }
+
 }

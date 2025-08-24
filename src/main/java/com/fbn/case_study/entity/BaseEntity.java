@@ -10,9 +10,13 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import static com.fbn.case_study.config.SecurityConfig.getCurrentUser;
 
 @MappedSuperclass
 @Setter
@@ -44,4 +48,23 @@ public class BaseEntity implements Serializable {
 
     @LastModifiedBy
     private String lastModifiedBy;
+
+    @PrePersist
+    protected void onCreate() {
+        LocalDateTime now = LocalDateTime.now();
+        this.createdAt = now;
+        this.updatedAt = now;
+
+        String currentUser = getCurrentUser();
+        this.createdBy = currentUser;
+        this.lastModifiedBy = currentUser;
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = LocalDateTime.now();
+
+        this.lastModifiedBy = getCurrentUser();
+    }
+
 }

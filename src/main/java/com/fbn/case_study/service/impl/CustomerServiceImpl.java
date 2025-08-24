@@ -21,16 +21,6 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
     private final CustomerMapper mapper;
     @Transactional
-    public CustomerDto.Response create(CustomerDto.Request request, CustomerMapper mapper, String principal) {
-        if (customerRepository.existsByAccountNumber(request.getAccountNumber())) {
-            throw new DuplicateKeyException("Account number already exists");
-        }
-        Customer c = mapper.toEntity(request);
-        c.setCreatedBy(principal);
-        c.setLastModifiedBy(principal);
-        return mapper.toResponse(customerRepository.save(c));
-    }
-    @Transactional
     public CustomerDto.Response create(CustomerDto.Request request) {
         if (customerRepository.existsByAccountNumber(request.getAccountNumber())) {
             throw new DuplicateKeyException("Account number already exists");
@@ -51,7 +41,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Transactional
-    public CustomerDto.Response update(String id, CustomerDto.Request req, CustomerMapper mapper, String principal) {
+    public CustomerDto.Response update(String id, CustomerDto.Request req) {
         Customer c = customerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Customer not found"));
         c.setFirstName(req.getFirstName());
         c.setLastName(req.getLastName());
@@ -60,19 +50,7 @@ public class CustomerServiceImpl implements CustomerService {
         c.setCustomerType(req.getCustomerType());
         c.setClassification(req.getClassification());
         c.setKycLevel(req.getKycLevel());
-        c.setLastModifiedBy(principal);
-        return mapper.toResponse(customerRepository.save(c));
-    }
-    @Transactional
-    public CustomerDto.Response update(String id, CustomerDto.Request req, CustomerMapper mapper) {
-        Customer c = customerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Customer not found"));
-        c.setFirstName(req.getFirstName());
-        c.setLastName(req.getLastName());
-        c.setEmail(req.getEmail());
-        c.setPhone(req.getPhone());
-        c.setCustomerType(req.getCustomerType());
-        c.setClassification(req.getClassification());
-        c.setKycLevel(req.getKycLevel());
+        c.setLastModifiedBy("admin");
         return mapper.toResponse(customerRepository.save(c));
     }
 
